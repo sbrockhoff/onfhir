@@ -38,7 +38,10 @@ public class FhirService2 {
 
 	public List<ExplanationOfBenefit> getEobByPatientId(String patientId) {
 		List<ExplanationOfBenefit> eob = new ArrayList<ExplanationOfBenefit>();
-		Bundle bundle = client.search().forResource(ExplanationOfBenefit.class).where(new StringClientParam("patient").matches().value(patientId)).execute();
+		Bundle bundle = client.search().forResource(ExplanationOfBenefit.class)
+				.where(new StringClientParam("patient").matches().value(patientId))
+				.limitTo(50)
+				.execute();
 		for(BundleEntry entry : bundle.getEntries()) {
 			if(entry != null && !entry.getResource().isEmpty()) {
 				eob.add((ExplanationOfBenefit) entry.getResource());
