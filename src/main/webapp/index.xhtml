@@ -24,14 +24,36 @@
 		<h:form>
 			<h:panelGrid columns="5" cellpadding="5">
 
-				<h:outputLabel for="patientId" value="Patient ID:" style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;"/>
-				<p:inputText id="patientId" value="#{patientInfoBean.patientId}" required="true" label="Patient ID: " />
+				<h:outputLabel for="patientIdInput" value="Patient ID:" style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;"/>
+				<p:inputText id="patientIdInput" value="#{patientInfoBean.patientId}" required="true" label="Patient ID: " />
 
-				<p:commandButton value="Search" actionListener="#{patientInfoBean.submit}" style="color: blue; padding-left: 25px; padding-right: 25px; left: 10px" />
+				<p:commandButton value="Search" update="searchResultsWrapper" actionListener="#{patientInfoBean.submit}" style="color: blue; padding-left: 25px; padding-right: 25px; left: 10px" />
 
 			</h:panelGrid>
 
 			<br />
+			
+			<h:panelGroup id="searchResultsWrapper">
+				<h:panelGroup id="searchResults" rendered="#{patientInfoBean.patient != null}">
+					<hr />
+					<h3>Search Results:</h3>
+	
+					<h:panelGrid columns="2" id="patientGroup" layout="block">
+						<h:outputLabel value="Patient ID" />
+						<h:outputText value="#{patientInfoBean.patient.userId}" />
+						<h:outputLabel value="First Name" />
+						<h:outputText value="#{patientInfoBean.patient.firstName}" />
+						<h:outputLabel value="Last Name" />
+						<h:outputText value="#{patientInfoBean.patient.lastName}" />
+						<h:outputLabel value="Birth Date" />
+						<h:outputText value="#{patientInfoBean.patient.birthDate}" />
+						<h:outputLabel value="Emergency Contact" />
+						<h:outputText value="#{patientInfoBean.patient.patientContact}" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:panelGroup>
+			
+			
 
 		</h:form>
 	</div>
