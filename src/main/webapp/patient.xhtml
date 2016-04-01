@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>FHIR Service</title>
+	<link rel="stylesheet" type="text/css" href="/ccw-fhir-client/style/style.css" media="all"></link>
+</h:head>
+<h:body>
+	<div id="header">
+		<img src="/ccw-fhir-client/images/logo.svg" style="padding-top: 20px; padding-left: 15px;" alt="" />
+		<div id="nav">
+			<div class="navLink">
+				<a href="/ccw-fhir-client/index.xhtml">FHIR Search</a>
+			</div>
+			<div class="navLink">
+				<a href="/ccw-fhir-client/patient.xhtml">FHIR Patient List</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+		<h2>Patient List Check</h2>
+		<h:form>
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+			<h:panelGrid columns="2" cellpadding="5">
+				<f:facet name="footer">
+					<p:commandButton value="Load Patient List" update="patientGroup  growl" actionListener="#{patientBean.submitPatientRequest}"
+						style="color: blue; padding-left: 25px; padding-right: 25px;" />
+				</f:facet>
+			</h:panelGrid>
+			<br />
+			<h:panelGroup id="patientGroup" layout="block">
+				<p:dataTable id="patientTable" var="patient" value="#{patientBean.patientList}">
+				<p:column headerText="Id">
+					#{patient.patient.id.idPart}
+				</p:column>
+				<p:column headerText="Patient's Name">
+					<ui:repeat var="name" value="#{patient.patient.name}">
+						#{name.nameAsSingleString}
+					</ui:repeat>
+				</p:column>
+				<p:column headerText="Patient's Gender">
+					#{patient.patient.gender}
+				</p:column>
+				<p:column headerText="Patient's Birth Date">
+					#{patient.patient.birthDate}
+				</p:column>
+					#{patient.addressFirstRep.lineFirstRep.value}
+				<p:column headerText="Patient's Contact">
+					#{patient.patient.contactFirstRep.name.nameAsSingleString}
+				</p:column>
+					<p:column headerText="Medication Order">
+						<p:dataList value="#{patient.dosageInstructionList}" var="dos" type="ordered">
+							<f:facet name="header">
+            				Dosage Instructions
+        				</f:facet>
+       					 #{dos.text}
+    					</p:dataList>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</div>
+</h:body>
+</html>
