@@ -40,7 +40,7 @@ public class FhirService2 {
 		List<ExplanationOfBenefit> eob = new ArrayList<ExplanationOfBenefit>();
 		Bundle bundle = client.search().forResource(ExplanationOfBenefit.class)
 				.where(new StringClientParam("patient").matches().value(patientId))
-				.limitTo(50)
+				.limitTo(50)	//TODO:: get more pages
 				.execute();
 		for(BundleEntry entry : bundle.getEntries()) {
 			if(entry != null && !entry.getResource().isEmpty()) {
