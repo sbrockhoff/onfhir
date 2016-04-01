@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>FHIR Service</title>
+	<link rel="stylesheet" type="text/css" href="/ccw-fhir-client/style/style.css" media="all"></link>
+</h:head>
+<h:body>
+	<div id="header">
+		<img src="/ccw-fhir-client/images/logo.svg" style="padding-top: 20px; padding-left: 15px;" alt="" />
+		<div id="nav">
+			<div class="navLink">
+				<a href="/ccw-fhir-client/index.xhtml">FHIR Search</a>
+			</div>
+			<div class="navLink">
+				<a href="/ccw-fhir-client/patient.xhtml">FHIR Patient List</a>
+			</div>
+		</div>
+	</div>
+	<br />
+
+	<div id="main">
+
+		<h2>Patient Prescription Check</h2>
+
+		<h:form>
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+			<h:panelGrid columns="5" cellpadding="5">
+
+				<h:outputLabel for="firstName" value="First Name:" style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;"/>
+				<p:inputText id="firstName" value="#{patientBean.personNameGivenName}" required="true" label="First Name" />
+
+				<h:outputLabel for="lastName" value="Last Name:" style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;"/>
+				<p:inputText id="lastName" value="#{patientBean.personNameFamilyName}" required="true" label="Last Name" />
+
+				<p:commandButton value="Search" update="patientGroup medOrderTableGroup interactionTableGroup interactionTableGroup1 growl" actionListener="#{patientBean.submit}" style="color: blue; padding-left: 25px; padding-right: 25px; left: 10px" />
+
+			</h:panelGrid>
+
+			<br />
+			<hr />
+
+			<h3>Search Results:</h3>
+
+			<h:panelGrid columns="6" id="patientGroup" layout="block" width="100%">
+				<h:outputLabel id="selectedPatient" value="Patient's Full Name: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="patientName" value="#{patientBean.patient.nameFirstRep.nameAsSingleString}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+
+				<h:outputLabel id="addressAddress1Lbl" value="Street: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="addressAddress1" value="#{patientBean.addressAddress1}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+				
+				<h:outputLabel id="patientIdLbl" value="Patient ID: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="patientId" value="#{patientBean.patientId}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+
+				<h:outputLabel id="personNamePrefixLbl" value="Name Prefix: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="personNamePrefix" value="#{patientBean.personNamePrefix}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+				
+				<h:outputLabel id="addressCityVillageLbl" value="City: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="addressCityVillage" value="#{patientBean.addressCityVillage}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />		
+				
+				<h:outputLabel id="birthdateLbl" value="Birthdate: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="birthdate" value="#{patientBean.birthdate}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+				
+				<h:outputLabel id="personNameGivenNameLbl" value="First Name: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="personNameGivenName" value="#{patientBean.personNameGivenName}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+				
+				<h:outputLabel id="addressStateProvinceLbl" value="State/Province: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="addressStateProvince" value="#{patientBean.addressStateProvince}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+				
+				<h:outputLabel id="genderLbl" value="Gender: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="gender" value="#{patientBean.gender}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+				
+				<h:outputLabel id="personNameFamilyNameLbl" value="Last Name: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="personNameFamilyName" value="#{patientBean.personNameFamilyName}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+				
+				<h:outputLabel id="addressPostalCodeLbl" value="Postal Code: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="addressPostalCode" value="#{patientBean.addressPostalCode}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+			
+				<h:outputLabel id="deadLbl" value="Dead: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="dead" value="#{patientBean.dead}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+
+				<h:outputLabel id="personNameFamilyNameSuffixLbl" value="Name Suffix: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="personNameFamilyNameSuffix" value="#{patientBean.personNameFamilyNameSuffix}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f;" />
+			
+				<h:outputLabel id="addressCountryLbl" value="Country: " style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;" rendered="#{patientBean.patient ne null}" />
+				<h:outputText id="addressCountry" value="#{patientBean.addressCountry}" rendered="#{patientBean.patient ne null}" style="font-size: 1.1em; color: #4f4f4f; color: #4f4f4f;" />
+
+			</h:panelGrid>
+
+			<h4>Medication Order:</h4>
+
+			<h:panelGroup id="medOrderTableGroup" layout="block">
+				<p:dataTable id="medOrderTable" value="#{patientBean.medOrderList}" var="medOrder">
+					<p:column headerText="Order Id">
+						#{medOrder.id.idPart}
+					</p:column>
+					<p:column headerText="Medication">
+						<ui:repeat var="med" value="#{medOrder.medication}">
+							#{med.display}
+						</ui:repeat>
+					</p:column>
+					<p:column headerText="Dosage Instruction">
+						<ui:repeat var="dosage" value="#{medOrder.dosageInstruction}">
+							#{dosage.text}
+						</ui:repeat>
+					</p:column>
+					<p:column headerText="Date Written">
+						#{medOrder.dateWritten}
+					</p:column>
+					<p:column headerText="Reason">
+						#{medOrder.reason.display}
+					</p:column>
+					<p:column headerText="Prescriber">
+						#{medOrder.prescriber.display}
+					</p:column>
+						<p:column headerText="Notes">
+						#{medOrder.note}
+					</p:column>
+					<p:column headerText="Order Status">
+						#{medOrder.status}
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+			
+			<h4>Specific Interactions:</h4>
+			<h:panelGroup id="interactionTableGroup1" layout="block">
+				<p:dataTable id="interactionTable1" value="#{patientBean.fullInteractionList}" var="intrctn">
+					<p:column headerText="Description">
+					<ui:repeat var="intrctnTypeGroup" value="#{intrctn.fullInteractionTypeGroup}">
+						<ui:repeat var="intrctnType" value="#{intrctnTypeGroup.interactionType}">
+							<ui:repeat var="intrctnPair" value="#{intrctnType.interactionPair}">
+								#{intrctnPair.description}<br /><br />
+							</ui:repeat>
+						</ui:repeat>
+					</ui:repeat>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+			
+			<h4>Interactions:</h4>
+
+			<h:panelGroup id="interactionTableGroup" layout="block">
+				<p:dataTable id="interactionTable" value="#{patientBean.interactionList}" var="intrctn">
+					<p:column headerText="RX CUI" width="5%" style="text-align: center; vertical-align: top;">
+						#{intrctn.userInput.rxcui}
+					</p:column>
+					<p:column headerText="Medication" width="10%" style="text-align: center; vertical-align: top;">
+						#{intrctn.drugName}
+					</p:column>
+					<p:column headerText="Description">
+					<ui:repeat var="intrctnTypeGroup" value="#{intrctn.interactionTypeGroup}">
+						<ui:repeat var="intrctnType" value="#{intrctnTypeGroup.interactionType}">
+							<ui:repeat var="intrctnPair" value="#{intrctnType.interactionPair}">
+								#{intrctnPair.description}<br /><br />
+							</ui:repeat>
+						</ui:repeat>
+					</ui:repeat>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</div>
+</h:body>
+</html>
