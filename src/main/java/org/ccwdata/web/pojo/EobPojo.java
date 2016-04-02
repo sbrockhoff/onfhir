@@ -20,6 +20,7 @@ public class EobPojo {
 	public EobPojo(ExplanationOfBenefit eob) {
 		this.id = eob.getId().substring(eob.getId().lastIndexOf('/') + 1, eob.getId().length());
 		if(eob.getPrescription() != null && eob.getPrescription().getReference() != null) {
+			this.hasPrescription = true;
 			this.medicationOrderId = eob.getPrescription().getReference().substring(eob.getPrescription().getReference().lastIndexOf('/') + 1, eob.getPrescription().getReference().length());
 		}
 		for(ItemsComponent item : eob.getItem()) {
