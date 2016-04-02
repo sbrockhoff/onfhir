@@ -30,7 +30,11 @@ public class NihService {
 		
 		if(response.getStatus() == 200) {
 			RxNorm rxNorm = response.getEntity(RxNorm.class);
-//			return ndcStatus.getNdcHistory().getActiveRxcui();
+			if(rxNorm.getNdcStatus() != null && rxNorm.getNdcStatus().getNdcHistoryList() != null 
+					&& !rxNorm.getNdcStatus().getNdcHistoryList().isEmpty()) {
+				String rxcuid = rxNorm.getNdcStatus().getNdcHistoryList().get(0).getActiveRxcui();
+				return rxcuid;
+			}
 			return null;
 		}
 		else {
