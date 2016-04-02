@@ -36,7 +36,7 @@ public class PatientPojo {
 		this.firstName = patient.getName().get(0).getGivenAsSingleString();
 		this.lastName = patient.getName().get(0).getFamilyAsSingleString();
 		this.birthDate = patient.getBirthDate();
-		if(patient.getContact() != null && patient.getContact().get(0) != null) {
+		if(patient.getContact() != null && !patient.getContact().isEmpty() && patient.getContact().get(0) != null) {
 			this.patientContact = patient.getContact().get(0).getName().getNameAsSingleString();
 		}
 	}
