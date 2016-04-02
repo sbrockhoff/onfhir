@@ -9,6 +9,8 @@ import org.hl7.fhir.dstu3.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
 import org.hl7.fhir.dstu3.model.Bundle;
+import org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent;
+
 import ca.uhn.fhir.model.api.BundleEntry;
 import ca.uhn.fhir.rest.client.IGenericClient;
 import ca.uhn.fhir.rest.gclient.StringClientParam;
@@ -30,11 +32,11 @@ public class FhirService2 {
 				.where(new StringClientParam("_id").matches().value(patientId))
 				.returnBundle(Bundle.class)
 				.execute();
-//		for(BundleEntry entry : bundle.getEntry()) {
-//			if(entry != null && !entry.getResource().isEmpty()) {
-//				patient = (Patient) entry.getResource();
-//			}
-//		}
+		for(BundleEntryComponent entry : bundle.getEntry()) {
+			if(entry != null && !entry.getResource().isEmpty()) {
+				patient = (Patient) entry.getResource();
+			}
+		}
 		PatientPojo ppojo = new PatientPojo(patient);
 		return ppojo;
 	}
@@ -45,11 +47,11 @@ public class FhirService2 {
 				.where(new StringClientParam("patient").matches().value(patientId))
 				.returnBundle(Bundle.class)
 				.execute();
-//		for(BundleEntry entry : bundle.getEntries()) {
-//			if(entry != null && !entry.getResource().isEmpty()) {
-//				eob.add((ExplanationOfBenefit) entry.getResource());
-//			}
-//		}
+		for(BundleEntryComponent entry : bundle.getEntry()) {
+			if(entry != null && !entry.getResource().isEmpty()) {
+				eob.add((ExplanationOfBenefit) entry.getResource());
+			}
+		}
 
 		return eob;
 	}
