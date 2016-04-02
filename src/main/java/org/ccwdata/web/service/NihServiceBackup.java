@@ -14,11 +14,6 @@
 //import org.apache.http.client.HttpClient;
 //import org.apache.http.client.methods.HttpGet;
 //import org.apache.http.impl.client.DefaultHttpClient;
-//import org.ccwdata.pojo.json.FullInteraction;
-//import org.ccwdata.pojo.json.Interaction;
-//import org.ccwdata.web.pojo.NdcStatusPojo;
-//import org.codehaus.jackson.map.ObjectMapper;
-//
 //import com.sun.jersey.api.client.Client;
 //import com.sun.jersey.api.client.ClientResponse;
 //import com.sun.jersey.api.client.WebResource;
@@ -27,44 +22,30 @@
 //
 //@SuppressWarnings("deprecation")
 //public class NihServiceBackup {
+//
 //	private Client client;
 //	private WebResource baseResource;
 //	private String serviceUrl = "https://rxnav.nlm.nih.gov/REST/";
-//	
+//
 //	public void init() {
 //		ClientConfig clientConfig = new DefaultClientConfig();
 //		client = Client.create(clientConfig);
-//		//client.addFilter(new LoggingFilter(System.out));
+//		// client.addFilter(new LoggingFilter(System.out));
 //		baseResource = client.resource(serviceUrl);
 //	}
-//	
+//
 //	public String getRxcuidByNdc(String ndc) {
 //		WebResource ndcResource = baseResource.path("ndcstatus").queryParam("ndc", ndc);
-//		
+//
 //		ClientResponse response = ndcResource.accept("application/json").get(ClientResponse.class);
-//		
+//
 //		if(response.getStatus() == 200) {
 //			NdcStatusPojo ndcPojo = response.getEntity(NdcStatusPojo.class);
 //			return ndcPojo.getRcxui();
-//		}
-//		else {
+//		}else {
 //			return null;
 //		}
 //	}
-//
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
 //
 //	public Interaction retrieveInteraction(String drugName) {
 //		// Get interactions
@@ -82,7 +63,7 @@
 //	}
 //
 //	public FullInteraction retrieveInteractionForList(List<String> drugNames) {
-//		//Get all rxcuis first
+//		// Get all rxcuis first
 //		List<String> rxcuis = new ArrayList<>();
 //		for(String dn : drugNames) {
 //			if(StringUtils.isNotBlank(dn) && StringUtils.isAlpha(dn)) {
@@ -93,7 +74,7 @@
 //			}
 //		}
 //
-//		//Get interactions for the list
+//		// Get interactions for the list
 //		if(rxcuis != null && !rxcuis.isEmpty()) {
 //			FullInteraction fullInteraction = retrieveInteractions(rxcuis);
 //			return fullInteraction;
@@ -120,44 +101,50 @@
 //			// If the response does not enclose an entity, there is no need
 //			// to bother about connection release
 //			byte[] buffer = new byte[1024];
-//			if (entity != null) {
+//			if(entity != null) {
 //				InputStream inputStream = entity.getContent();
 //				try {
 //					int bytesRead = 0;
 //					BufferedInputStream bis = new BufferedInputStream(inputStream);
-//					while ((bytesRead = bis.read(buffer)) != -1) {
+//					while((bytesRead = bis.read(buffer)) != -1) {
 //						String xml = new String(buffer, 0, bytesRead);
 //
-//						if(xml !=null && xml.indexOf("<rxnormId>") > 0) {
+//						if(xml != null && xml.indexOf("<rxnormId>") > 0) {
 //							rxCui = xml.split("<rxnormId>")[1].split("</rxnormId>")[0];
 //						}
 //
 //					}
-//				} catch (IOException ioException) {
+//				}
+//				catch(IOException ioException) {
 //					// In case of an IOException the connection will be released
 //					// back to the connection manager automatically
 //					ioException.printStackTrace();
-//				} catch (RuntimeException runtimeException) {
+//				}
+//				catch(RuntimeException runtimeException) {
 //					// In case of an unexpected exception you may want to abort
 //					// the HTTP request in order to shut down the underlying
 //					// connection immediately.
 //					httpGetRequest.abort();
 //					runtimeException.printStackTrace();
-//				} finally {
+//				}
+//				finally {
 //					// Closing the input stream will trigger connection release
 //					try {
 //						inputStream.close();
-//					} catch (Exception ignore) {
 //					}
+//					catch(Exception ignore) {}
 //				}
 //			}
-//		} catch (ClientProtocolException e) {
+//		}
+//		catch(ClientProtocolException e) {
 //			// thrown by httpClient.execute(httpGetRequest)
 //			e.printStackTrace();
-//		} catch (IOException e) {
+//		}
+//		catch(IOException e) {
 //			// thrown by entity.getContent();
 //			e.printStackTrace();
-//		} finally {
+//		}
+//		finally {
 //			// When HttpClient instance is no longer needed,
 //			// shut down the connection manager to ensure
 //			// immediate deallocation of all system resources
@@ -186,40 +173,46 @@
 //			// If the response does not enclose an entity, there is no need
 //			// to bother about connection release
 //			byte[] buffer = new byte[1024];
-//			if (entity != null) {
+//			if(entity != null) {
 //				InputStream inputStream = entity.getContent();
 //				try {
 //					int bytesRead = 0;
 //					BufferedInputStream bis = new BufferedInputStream(inputStream);
-//					while ((bytesRead = bis.read(buffer)) != -1) {
+//					while((bytesRead = bis.read(buffer)) != -1) {
 //						String chunk = new String(buffer, 0, bytesRead);
 //						jsonStr += chunk;
 //					}
-//				} catch (IOException ioException) {
+//				}
+//				catch(IOException ioException) {
 //					// In case of an IOException the connection will be released
 //					// back to the connection manager automatically
 //					ioException.printStackTrace();
-//				} catch (RuntimeException runtimeException) {
+//				}
+//				catch(RuntimeException runtimeException) {
 //					// In case of an unexpected exception you may want to abort
 //					// the HTTP request in order to shut down the underlying
 //					// connection immediately.
 //					httpGetRequest.abort();
 //					runtimeException.printStackTrace();
-//				} finally {
+//				}
+//				finally {
 //					// Closing the input stream will trigger connection release
 //					try {
 //						inputStream.close();
-//					} catch (Exception ignore) {
 //					}
+//					catch(Exception ignore) {}
 //				}
 //			}
-//		} catch (ClientProtocolException e) {
+//		}
+//		catch(ClientProtocolException e) {
 //			// thrown by httpClient.execute(httpGetRequest)
 //			e.printStackTrace();
-//		} catch (IOException e) {
+//		}
+//		catch(IOException e) {
 //			// thrown by entity.getContent();
 //			e.printStackTrace();
-//		} finally {
+//		}
+//		finally {
 //			// When HttpClient instance is no longer needed,
 //			// shut down the connection manager to ensure
 //			// immediate deallocation of all system resources
@@ -230,13 +223,16 @@
 //		FullInteraction fullInteraction = null;
 //		try {
 //			fullInteraction = mapper.readValue(jsonStr, FullInteraction.class);
-//		} catch (JsonParseException e) {
+//		}
+//		catch(JsonParseException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-//		} catch (JsonMappingException e) {
+//		}
+//		catch(JsonMappingException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-//		} catch (IOException e) {
+//		}
+//		catch(IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
@@ -262,40 +258,46 @@
 //			// If the response does not enclose an entity, there is no need
 //			// to bother about connection release
 //			byte[] buffer = new byte[1024];
-//			if (entity != null) {
+//			if(entity != null) {
 //				InputStream inputStream = entity.getContent();
 //				try {
 //					int bytesRead = 0;
 //					BufferedInputStream bis = new BufferedInputStream(inputStream);
-//					while ((bytesRead = bis.read(buffer)) != -1) {
+//					while((bytesRead = bis.read(buffer)) != -1) {
 //						String chunk = new String(buffer, 0, bytesRead);
 //						jsonStr += chunk;
 //					}
-//				} catch (IOException ioException) {
+//				}
+//				catch(IOException ioException) {
 //					// In case of an IOException the connection will be released
 //					// back to the connection manager automatically
 //					ioException.printStackTrace();
-//				} catch (RuntimeException runtimeException) {
+//				}
+//				catch(RuntimeException runtimeException) {
 //					// In case of an unexpected exception you may want to abort
 //					// the HTTP request in order to shut down the underlying
 //					// connection immediately.
 //					httpGetRequest.abort();
 //					runtimeException.printStackTrace();
-//				} finally {
+//				}
+//				finally {
 //					// Closing the input stream will trigger connection release
 //					try {
 //						inputStream.close();
-//					} catch (Exception ignore) {
 //					}
+//					catch(Exception ignore) {}
 //				}
 //			}
-//		} catch (ClientProtocolException e) {
+//		}
+//		catch(ClientProtocolException e) {
 //			// thrown by httpClient.execute(httpGetRequest)
 //			e.printStackTrace();
-//		} catch (IOException e) {
+//		}
+//		catch(IOException e) {
 //			// thrown by entity.getContent();
 //			e.printStackTrace();
-//		} finally {
+//		}
+//		finally {
 //			// When HttpClient instance is no longer needed,
 //			// shut down the connection manager to ensure
 //			// immediate deallocation of all system resources
@@ -306,13 +308,16 @@
 //		Interaction interaction = null;
 //		try {
 //			interaction = mapper.readValue(jsonStr, Interaction.class);
-//		} catch (JsonParseException e) {
+//		}
+//		catch(JsonParseException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-//		} catch (JsonMappingException e) {
+//		}
+//		catch(JsonMappingException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-//		} catch (IOException e) {
+//		}
+//		catch(IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
