@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ccwdata.web.pojo.PatientPojo;
+import org.hl7.fhir.dstu3.model.ExplanationOfBenefit;
+import org.hl7.fhir.dstu3.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.model.api.BundleEntry;
 import ca.uhn.fhir.model.api.Bundle;
-import ca.uhn.fhir.model.dstu2.resource.ExplanationOfBenefit;
-import ca.uhn.fhir.model.dstu2.resource.Patient;
 import ca.uhn.fhir.rest.client.IGenericClient;
 import ca.uhn.fhir.rest.gclient.StringClientParam;
 
@@ -19,7 +19,7 @@ public class FhirService2 {
 	private IGenericClient client;
 
 	public FhirService2() {
-		FhirContext ctx = FhirContext.forDstu2();
+		FhirContext ctx = new FhirContext();
 
 		client = ctx.newRestfulGenericClient(serverBase);
 	}
@@ -40,7 +40,6 @@ public class FhirService2 {
 		List<ExplanationOfBenefit> eob = new ArrayList<ExplanationOfBenefit>();
 		Bundle bundle = client.search().forResource(ExplanationOfBenefit.class)
 				.where(new StringClientParam("patient").matches().value(patientId))
-				.limitTo(50)	//TODO:: get more pages
 				.execute();
 		for(BundleEntry entry : bundle.getEntries()) {
 			if(entry != null && !entry.getResource().isEmpty()) {
@@ -50,5 +49,6 @@ public class FhirService2 {
 
 		return eob;
 	}
+	
 
 }

@@ -2,7 +2,8 @@ package org.ccwdata.web.service;
 
 import java.util.List;
 
-import ca.uhn.fhir.model.dstu2.resource.ExplanationOfBenefit;
+import org.hl7.fhir.dstu3.model.ExplanationOfBenefit;
+
 
 public class FhirService2Test {
 

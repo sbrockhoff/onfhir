@@ -2,7 +2,7 @@ package org.ccwdata.web.pojo;
 
 import java.util.Date;
 
-import ca.uhn.fhir.model.dstu2.resource.Patient;
+import org.hl7.fhir.dstu3.model.Patient;
 
 public class PatientPojo {
 
@@ -31,12 +31,12 @@ public class PatientPojo {
 	 * @param patient
 	 */
 	public PatientPojo(Patient patient) {
-		this.userId = patient.getId().getIdPart();
-		this.fullName = patient.getNameFirstRep().getNameAsSingleString();
-		this.firstName = patient.getNameFirstRep().getGivenAsSingleString();
-		this.lastName = patient.getNameFirstRep().getFamilyAsSingleString();
+		this.userId = patient.getId();
+		this.fullName = patient.getName().get(0).getNameAsSingleString();
+		this.firstName = patient.getName().get(0).getGivenAsSingleString();
+		this.lastName = patient.getName().get(0).getFamilyAsSingleString();
 		this.birthDate = patient.getBirthDate();
-		this.patientContact = patient.getContactFirstRep().getName().getNameAsSingleString();
+		this.patientContact = patient.getContact().get(0).getName().getNameAsSingleString();
 	}
 
 	public String getUserId() {

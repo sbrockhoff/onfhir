@@ -24,6 +24,7 @@ public class PatientInfoBean {
 		}
 		
 		patient = fhirService.getPatientByPatientId(patientId);
+		fhirService.getEobByPatientId(patientId);
 		System.out.println(patient);
 	}
 
