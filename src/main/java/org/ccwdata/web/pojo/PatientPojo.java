@@ -4,8 +4,6 @@ import java.util.Date;
 
 import org.hl7.fhir.dstu3.model.Patient;
 
-
-
 public class PatientPojo {
 
 	private String userId;
@@ -38,7 +36,9 @@ public class PatientPojo {
 		this.firstName = patient.getName().get(0).getGivenAsSingleString();
 		this.lastName = patient.getName().get(0).getFamilyAsSingleString();
 		this.birthDate = patient.getBirthDate();
-		this.patientContact = patient.getContact().get(0).getName().getNameAsSingleString();
+		if(patient.getContact() != null && patient.getContact().get(0) != null) {
+			this.patientContact = patient.getContact().get(0).getName().getNameAsSingleString();
+		}
 	}
 
 	public String getUserId() {
