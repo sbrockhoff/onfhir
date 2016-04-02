@@ -3,11 +3,15 @@ package org.ccwdata.web.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ccwdata.web.pojo.MedicationPojo;
 import org.ccwdata.web.pojo.PatientPojo;
 import org.hl7.fhir.dstu3.model.ExplanationOfBenefit;
+import org.hl7.fhir.dstu3.model.MedicationOrder;
 import org.hl7.fhir.dstu3.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
+
+import org.hl7.fhir.dstu3.exceptions.FHIRException;
 import org.hl7.fhir.dstu3.model.Bundle;
 import org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent;
 
@@ -54,6 +58,22 @@ public class FhirService2 {
 		}
 
 		return eob;
+	}
+	
+	public MedicationPojo getMedicationOrderById(String medicationOrderId) throws FHIRException {
+		MedicationOrder medOrder = null;
+		Bundle bundle = client.search().forResource(MedicationOrder.class)
+				.where(new StringClientParam("_id").matches().value(medicationOrderId))
+				.returnBundle(Bundle.class)
+				.execute();
+		for(BundleEntryComponent entry : bundle.getEntry()) {
+			if(entry != null && !entry.getResource().isEmpty()) {
+				medOrder = (MedicationOrder) entry.getResource();
+			}
+		}
+		
+		MedicationPojo medPojo = new MedicationPojo(medOrder);
+		return medPojo;
 	}
 	
 

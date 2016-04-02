@@ -2,7 +2,9 @@ package org.ccwdata.web.service;
 
 import java.util.List;
 
+import org.ccwdata.web.pojo.MedicationPojo;
 import org.ccwdata.web.pojo.PatientPojo;
+import org.hl7.fhir.dstu3.exceptions.FHIRException;
 import org.hl7.fhir.dstu3.model.ExplanationOfBenefit;
 
 
@@ -10,10 +12,10 @@ import org.hl7.fhir.dstu3.model.ExplanationOfBenefit;
 
 public class FhirService2Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FHIRException {
 		FhirService2 fhirService = new FhirService2();
 		
-		PatientPojo patient = fhirService.getPatientByPatientId("147462");
+//		PatientPojo patient = fhirService.getPatientByPatientId("147462");
 //		147462
 		List<ExplanationOfBenefit> eobList = fhirService.getEobByPatientId("147462");
 		if(!eobList.isEmpty()) {
@@ -22,5 +24,8 @@ public class FhirService2Test {
 		}else{
 			System.out.println("list is empty");
 		}
+		
+		MedicationPojo med = fhirService.getMedicationOrderById("7078255");
+		System.out.println(med.getNdc());
 	}
 }
