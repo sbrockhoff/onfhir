@@ -1,5 +1,8 @@
 package org.ccwdata.web.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hl7.fhir.dstu3.exceptions.FHIRException;
 import org.hl7.fhir.dstu3.model.MedicationOrder;
 
@@ -11,6 +14,21 @@ public class MedicationPojo {
 	private String medName;
 	private String totalCost;
 	
+	private List<String> interactionComments;
+	
+	
+	public List<String> getInteractionComments() {
+		if(interactionComments == null) {
+			interactionComments = new ArrayList<>();
+		}
+		return interactionComments;
+	}
+
+	
+	public void setInteractionComments(List<String> interactionComments) {
+		this.interactionComments = interactionComments;
+	}
+
 	public MedicationPojo() {}
 	
 	public MedicationPojo(MedicationOrder medOrder) throws FHIRException {
