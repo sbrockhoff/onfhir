@@ -14,6 +14,7 @@ public class FhirService2Test {
 
 	public static void main(String[] args) throws FHIRException {
 		FhirService2 fhirService = new FhirService2();
+		NihService nihService = new NihService();
 		
 //		PatientPojo patient = fhirService.getPatientByPatientId("147462");
 //		147462
@@ -26,6 +27,9 @@ public class FhirService2Test {
 		}
 		
 		MedicationPojo med = fhirService.getMedicationOrderById("7078255");
-		System.out.println(med.getNdc());
+		System.out.println("ndc: " + med.getNdc());
+		
+		String rxcuid = nihService.getRxcuidByNdc(med.getNdc());
+		System.out.println("rxcuid: " + rxcuid);
 	}
 }
