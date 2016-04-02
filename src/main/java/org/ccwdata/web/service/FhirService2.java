@@ -8,8 +8,8 @@ import org.hl7.fhir.dstu3.model.ExplanationOfBenefit;
 import org.hl7.fhir.dstu3.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
+import org.hl7.fhir.dstu3.model.Bundle;
 import ca.uhn.fhir.model.api.BundleEntry;
-import ca.uhn.fhir.model.api.Bundle;
 import ca.uhn.fhir.rest.client.IGenericClient;
 import ca.uhn.fhir.rest.gclient.StringClientParam;
 
@@ -26,12 +26,15 @@ public class FhirService2 {
 
 	public PatientPojo getPatientByPatientId(String patientId) {
 		Patient patient = null;
-		Bundle bundle = client.search().forResource(Patient.class).where(new StringClientParam("_id").matches().value(patientId)).execute();
-		for(BundleEntry entry : bundle.getEntries()) {
-			if(entry != null && !entry.getResource().isEmpty()) {
-				patient = (Patient) entry.getResource();
-			}
-		}
+		Bundle bundle = client.search().forResource(Patient.class)
+				.where(new StringClientParam("_id").matches().value(patientId))
+				.returnBundle(Bundle.class)
+				.execute();
+//		for(BundleEntry entry : bundle.getEntry()) {
+//			if(entry != null && !entry.getResource().isEmpty()) {
+//				patient = (Patient) entry.getResource();
+//			}
+//		}
 		PatientPojo ppojo = new PatientPojo(patient);
 		return ppojo;
 	}
@@ -40,12 +43,13 @@ public class FhirService2 {
 		List<ExplanationOfBenefit> eob = new ArrayList<ExplanationOfBenefit>();
 		Bundle bundle = client.search().forResource(ExplanationOfBenefit.class)
 				.where(new StringClientParam("patient").matches().value(patientId))
+				.returnBundle(Bundle.class)
 				.execute();
-		for(BundleEntry entry : bundle.getEntries()) {
-			if(entry != null && !entry.getResource().isEmpty()) {
-				eob.add((ExplanationOfBenefit) entry.getResource());
-			}
-		}
+//		for(BundleEntry entry : bundle.getEntries()) {
+//			if(entry != null && !entry.getResource().isEmpty()) {
+//				eob.add((ExplanationOfBenefit) entry.getResource());
+//			}
+//		}
 
 		return eob;
 	}
