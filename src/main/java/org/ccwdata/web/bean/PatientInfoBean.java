@@ -40,7 +40,9 @@ public class PatientInfoBean {
 			MedicationPojo mp = fhirService.getMedicationOrderById(eob.getMedicationOrderId());
 			
 			String rxcuid = nihService.getRxcuidByNdc(mp.getNdc());
+			String name = nihService.getRxNameByRxcuid(rxcuid);
 			mp.setRxcuid(rxcuid);
+			mp.setMedName(name);
 			mp.setTotalCost(eob.getTotalPrescripition());
 			
 			medicationList.add(mp);

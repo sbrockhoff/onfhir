@@ -1,5 +1,6 @@
 package org.ccwdata.web.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ccwdata.web.pojo.nih.NdcStatus;
 import org.ccwdata.web.pojo.nih.RxNorm;
 
@@ -24,6 +25,9 @@ public class NihService {
 	}
 	
 	public String getRxcuidByNdc(String ndc) {
+		if(StringUtils.isBlank(ndc)) {
+			return null;
+		}
 		WebResource ndcResource = baseResource.path("ndcstatus").queryParam("ndc", ndc);
 		
 		ClientResponse response = ndcResource.accept("application/json").get(ClientResponse.class);
@@ -40,5 +44,28 @@ public class NihService {
 		else {
 			return null;
 		}
+	}
+	
+	public String getRxNameByRxcuid(String rxcuid) {
+		if(StringUtils.isBlank(rxcuid)) {
+			return null;
+		}
+		WebResource rxNameResource = baseResource.path("rxcui").path(rxcuid).path("property").queryParam("propName", "RxNorm Name");
+		
+		ClientResponse response = rxNameResource.accept("application/json").get(ClientResponse.class);
+		
+		if(response.getStatus() == 200) {
+			RxNorm rxNorm = response.getEntity(RxNorm.class);
+			if(rxNorm.getPropConceptGroup() != null && rxNorm.getPropConceptGroup().getPropConceptList() != null 
+					&& !rxNorm.getPropConceptGroup().getPropConceptList().isEmpty()) {
+				String name = rxNorm.getPropConceptGroup().getPropConceptList().get(0).getPropValue();
+				return name;
+			}
+			return null;
+		}
+		else {
+			return null;
+		}
+		
 	}
 }

@@ -32,5 +32,8 @@ public class FhirService2Test {
 		
 		String rxcuid = nihService.getRxcuidByNdc(med.getNdc());
 		System.out.println("rxcuid: " + rxcuid);
+		
+		String name = nihService.getRxNameByRxcuid(rxcuid);
+		System.out.println("name: " + name);
 	}
 }
