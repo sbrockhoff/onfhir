@@ -27,7 +27,7 @@
 				<h:outputLabel for="patientIdInput" value="Patient ID:" style="font-weight: bold; font-size: 1.1em; color: #4f4f4f;"/>
 				<p:inputText id="patientIdInput" value="#{patientInfoBean.patientId}" required="true" label="Patient ID: " />
 
-				<p:commandButton value="Search" update="searchResultsWrapper" actionListener="#{patientInfoBean.submit}" style="color: blue; padding-left: 25px; padding-right: 25px; left: 10px" />
+				<p:commandButton value="Search" update="searchResultsWrapper,medListWrapper" actionListener="#{patientInfoBean.submit}" style="color: blue; padding-left: 25px; padding-right: 25px; left: 10px" />
 
 			</h:panelGrid>
 
@@ -54,7 +54,22 @@
 			</h:panelGroup>
 			
 			
-
+			<h:panelGroup id="medListWrapper">
+				<h:panelGroup id="medlist" rendered="#{not empty patientInfoBean.medicationList}">
+					<h4>Medication</h4>
+					<p:dataTable id="medListTable" value="#{patientInfoBean.medicationList}" var="med">
+						<p:column headerText="NDC">
+							#{med.ndc}
+						</p:column>
+						<p:column headerText="Medication Name">
+							name
+						</p:column>
+						<p:column headerText="Total Cost">
+							#{med.totalCost}
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</h:panelGroup>
 		</h:form>
 	</div>
 </h:body>

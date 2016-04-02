@@ -7,7 +7,9 @@ public class MedicationPojo {
 	private String ndc;
 	
 	private String rxcuid;
+	
 	private String medName;
+	private String totalCost;
 	
 	public MedicationPojo() {}
 	
@@ -15,6 +17,14 @@ public class MedicationPojo {
 		ndc = medOrder.getMedicationCodeableConcept().getCoding().get(0).getCode();
 	}
 
+	public String getTotalCost() {
+		return totalCost;
+	}
+
+	
+	public void setTotalCost(String totalCost) {
+		this.totalCost = totalCost;
+	}
 	public String getNdc() {
 		return ndc;
 	}

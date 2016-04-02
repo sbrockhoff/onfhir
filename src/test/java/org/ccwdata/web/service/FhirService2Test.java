@@ -17,7 +17,7 @@ public class FhirService2Test {
 		FhirService2 fhirService = new FhirService2();
 		NihService nihService = new NihService();
 		
-//		PatientPojo patient = fhirService.getPatientByPatientId("147462");
+		PatientPojo patient = fhirService.getPatientByPatientId("147462");
 //		147462
 		List<EobPojo> eobList = fhirService.getEobByPatientId("147462");
 		if(!eobList.isEmpty()) {
