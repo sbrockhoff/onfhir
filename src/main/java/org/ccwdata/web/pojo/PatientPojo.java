@@ -31,7 +31,7 @@ public class PatientPojo {
 	 * @param patient
 	 */
 	public PatientPojo(Patient patient) {
-		this.userId = patient.getId();
+		this.userId = patient.getIdentifier().get(0).getId();
 		this.fullName = patient.getName().get(0).getNameAsSingleString();
 		this.firstName = patient.getName().get(0).getGivenAsSingleString();
 		this.lastName = patient.getName().get(0).getFamilyAsSingleString();
