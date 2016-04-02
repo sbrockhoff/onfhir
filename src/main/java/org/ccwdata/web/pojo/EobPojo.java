@@ -1,6 +1,6 @@
 package org.ccwdata.web.pojo;
 
-import org.hl7.fhir.dstu21.model.ExplanationOfBenefit;
+import org.hl7.fhir.dstu3.model.ExplanationOfBenefit;
 
 public class EobPojo {
 

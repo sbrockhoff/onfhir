@@ -2,7 +2,8 @@ package org.ccwdata.web.pojo;
 
 import java.util.Date;
 
-import org.hl7.fhir.dstu21.model.Patient;
+import org.hl7.fhir.dstu3.model.Patient;
+
 
 
 public class PatientPojo {
