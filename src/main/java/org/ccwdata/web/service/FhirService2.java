@@ -19,7 +19,7 @@ public class FhirService2 {
 	private IGenericClient client;
 
 	public FhirService2() {
-		FhirContext ctx = new FhirContext();
+		FhirContext ctx = FhirContext.forDstu3();
 
 		client = ctx.newRestfulGenericClient(serverBase);
 	}
